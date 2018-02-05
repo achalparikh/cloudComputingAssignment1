@@ -3,6 +3,9 @@ import db
 
 app = Flask(__name__)
 
+def stringToFloat(value):
+    v = float(value)
+    return v
 
 @app.route('/')
 def index():
@@ -13,13 +16,16 @@ def index():
 def success():
     if request.method == 'POST':
         email = request.form["user_email"]
-        height = request.form["user_height"]
-        weight = request.form["user_weight"]
-        bmi = float(weight)/(float(height)*float(height))
-        db.insert(email, height, weight, bmi)
-        print(db.search(email))
-        return render_template('success.html', email=db.search(email)[-1][1], height=db.search(email)[-1][2], weight=db.search(email)[-1][3]
-                               , bmi=db.search(email)[-1][4])
+        height = stringToFloat(request.form["user_height"])
+        weight = stringToFloat(request.form["user_weight"])
+        if (height != 0) and (weight != 0):
+            bmi = weight/(height*height)
+            db.insert(email, height, weight, bmi)
+            print(db.search(email))
+            return render_template('success.html', email=db.search(email)[-1][1], height=db.search(email)[-1][2], weight=db.search(email)[-1][3]
+                                   , bmi=db.search(email)[-1][4])
+        else:
+            return '<h1>Height or Weight can not be zero</h1>'
 
 
 if __name__ == '__main__':
