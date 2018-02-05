@@ -12,8 +12,8 @@
             <h3>Enter your details below</h3>
             <form action="{{url_for('success')}}" method="POST">
                 <input title="Email" placeholder="Email" type="email" name="user_email" required> <br>
-                <input title="height" placeholder="height" type="number" name="user_height" required> <br>
-                <input title="weight" placeholder="weight" type="number" name="user_weight" required> <br>
+                <input title="height" placeholder="height in m" step="any" type="number" name="user_height" required min="1"> <br>
+                <input title="weight" placeholder="weight in Kg" step="any" type="number" name="user_weight" required min="0"> <br>
                 <button type="submit">Submit</button>
             </form>
         </div>
